@@ -5,7 +5,7 @@ var tree = new Node() { ID = "Корень" };
 tree.Children.Add(new Node() { ID = "XXX" });
 tree.Children[0].Children.Add(new Node() { ID = "YYY" });
 
-Node a = tree.GetNodeByID("YYY3");
+Node a = tree.GetNodeByID("YYY");
 
 
 if (a != null)
@@ -25,22 +25,17 @@ public class Node // Класс узла дерева
     // Поиск узла по ID
     public Node? GetNodeByID(string id)
     {
-        if (string.IsNullOrEmpty(id))
+        if (string.IsNullOrEmpty(id)) 
             return null; // Обработка некорректного входного параметра
 
-        return FindNode(this, id);
-    }
-
-    private static Node? FindNode(Node node, string id)
-    {
-        // Если узел найден, возвращаем его
-        if (node.ID == id)
-            return node;
+        // Если текущий узел соответствует ID, возвращаем его
+        if (ID == id)
+            return this;
 
         // Рекурсивный поиск в потомках
-        foreach (var child in node.Children)
+        foreach (var child in Children)
         {
-            var result = FindNode(child, id);
+            var result = child.GetNodeByID(id);
             if (result != null)
                 return result;
         }
